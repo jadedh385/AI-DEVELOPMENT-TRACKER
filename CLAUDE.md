@@ -8,9 +8,9 @@ The full product vision lives in [`Ideas_V2.md`](./Ideas_V2.md). This file is th
 
 ## 1. Project Overview
 
-**Working codename: "Signal"** *(provisional — final name is an open decision, see §13)*
+**App name: "AI Landscape Signal"** *(locked)*
 
-Signal is a **personal AI-intelligence platform**: a calm, distraction-free web app that aggregates the AI developments that matter to one user (later, many users), filters them for personal relevance, and points to the original source. It is a **signpost, not a reader** — it tells you *what happened* and *where to go*, then gets out of the way.
+AI Landscape Signal is a **personal AI-intelligence platform**: a calm, distraction-free web app that aggregates the AI developments that matter to one user (later, many users), filters them for personal relevance, and points to the original source. It is a **signpost, not a reader** — it tells you *what happened* and *where to go*, then gets out of the way.
 
 - **Primary user:** a semi-technical founder (former software engineer) tracking AI to apply it to a non-tech business.
 - **Core promise:** never feel left behind, without doom-scrolling LinkedIn / X / Reddit.
@@ -340,12 +340,10 @@ Each as its own `orch-add-feature` slice: remaining sources (incl. signpost-only
 
 Raise these via the Preference Gate when relevant; log answers to `docs/decisions/`:
 
-1. **App name** (codename "Signal" is provisional).
-2. **Refresh cadence** — once vs. twice daily.
-3. **First sources** — which 2–3 🟢 sources to build first.
-4. **Tech stack confirmation** — accept the §4 default or adjust.
-5. **Hosting/database provider.**
-6. **Notifications** — opt-in digest now or defer to Phase 2.
+_Phase 1 decisions are now locked (see `docs/IMPLEMENTATION-PLAN.md` §0): name = "AI Landscape Signal", DB = SQLite, sources = Reddit + Hacker News + lab-blog RSS, once-daily refresh, local-first. Remaining open for later:_
+
+1. **Hosting provider** — decided at Phase 2 deploy (Stage 2.7).
+2. **Notifications** — opt-in digest, deferred to Phase 2.
 
 ---
 
