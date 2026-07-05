@@ -9,11 +9,19 @@ node_modules/
 .env.*
 !.env.example
 
+# Local SQLite database (regenerable; migrations ARE committed)
+prisma/*.db
+prisma/*.db-journal
+
 # Build output
 dist/
 build/
 .next/
 out/
+
+# TypeScript / Next auto-generated
+*.tsbuildinfo
+next-env.d.ts
 
 # Logs
 *.log

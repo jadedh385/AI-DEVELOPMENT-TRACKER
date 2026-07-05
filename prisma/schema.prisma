@@ -1,0 +1,67 @@
+// AI Landscape Signal — Phase 1 data model (SQLite via Prisma).
+// String-typed "enum" fields are validated in app code against the unions in
+// src/lib/constants.ts (SQLite has no native enum type). Schema stays portable
+// to Postgres for Phase 2 with no shape change. See docs/architecture/data-model.md.
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Source {
+  id               String   @id @default(cuid())
+  name             String
+  category         String // see constants: SOURCE_CATEGORIES
+  platform         String // see constants: SOURCE_PLATFORMS
+  type             String // see constants: SOURCE_TYPES
+  url              String // feed URL / API endpoint / handle
+  weight           Float    @default(1) // manual ranking hint (Phase 2 uses it)
+  refreshFrequency String   @default("daily")
+  keywordFilters   String? // JSON-encoded string[]; null = no filter
+  status           String   @default("active")
+  qualityScore     Float? // populated by Phase 2 health report; nullable now
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  items Item[]
+
+  @@unique([type, url]) // no duplicate source rows
+  @@index([status])
+}
+
+model Item {
+  id           String   @id @default(cuid())
+  sourceId     String
+  title        String
+  canonicalUrl String // where the signpost points
+  summary      String? // one-line "why it matters" (Stage 1.4)
+  author       String?
+  platform     String // denormalized for fast filtering
+  publishedAt  DateTime
+  fetchedAt    DateTime @default(now())
+  dedupeHash   String   @unique // content/URL hash — dedupe across sources
+
+  source   Source     @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  feedback Feedback[]
+
+  @@index([sourceId])
+  @@index([publishedAt])
+  @@index([platform])
+}
+
+model Feedback {
+  id        String   @id @default(cuid())
+  itemId    String
+  userId    String   @default("local") // Phase-2-ready; single user for now
+  reaction  String // see constants: FEEDBACK_REACTIONS
+  createdAt DateTime @default(now())
+
+  item Item @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@index([itemId])
+  @@index([reaction])
+}
