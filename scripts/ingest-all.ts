@@ -12,6 +12,7 @@ import { redditConnector } from '@/connectors/reddit'
 import { rssConnector } from '@/connectors/rss'
 import { ingestSource } from '@/server/ingest'
 import { getActiveSources } from '@/lib/registry'
+import { summarizeUnsummarized } from '@/lib/summarize'
 import type { Connector } from '@/connectors/types'
 
 const REDDIT_SUBREDDITS = 'MachineLearning+artificial+LocalLLaMA+ChatGPT'
@@ -103,6 +104,11 @@ async function main(): Promise<void> {
   console.info(
     `[ingest:all] done — total fetched=${totalFetched} stored=${totalStored} skipped=${totalSkipped}`,
   )
+
+  const summarized = await summarizeUnsummarized()
+  if (summarized > 0) {
+    console.info(`[ingest:all] summarized ${summarized} new item(s)`)
+  }
 }
 
 main()
