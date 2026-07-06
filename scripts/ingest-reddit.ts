@@ -40,6 +40,7 @@ async function ensureRedditSource(): Promise<SourceInput> {
     type: 'rss',
     url: source.url,
     platform: 'reddit',
+    category: 'community',
     keywordFilters: parsedKeywords,
   }
 }

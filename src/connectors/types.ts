@@ -7,7 +7,7 @@
  * (`src/lib/dedupe.ts`) owns hashing/de-duplication so that logic lives in one
  * place across all sources. Sources 2 & 3 (Reddit, RSS) must conform to this.
  */
-import type { SourcePlatform, SourceType } from '@/lib/constants'
+import type { SourceCategory, SourcePlatform, SourceType } from '@/lib/constants'
 
 /**
  * The common shape every source normalizes to before storage. Deliberately
@@ -25,15 +25,15 @@ export interface NormalizedItem {
 }
 
 /**
- * The subset of a Source registry row a connector needs to fetch. In Stage 1.2
- * this is projected from a real DB row; for now it is seeded by the ingest
- * script.
+ * The subset of a Source registry row a connector needs to fetch. Projected
+ * from a live DB row by the registry module or upserted by on-demand scripts.
  */
 export interface SourceInput {
   id: string
   type: SourceType
   url: string
   platform: SourcePlatform
+  category: SourceCategory
   keywordFilters?: string[]
 }
 

@@ -41,6 +41,7 @@ model Item {
   summary      String? // one-line "why it matters" (Stage 1.4)
   author       String?
   platform     String // denormalized for fast filtering
+  category     String // denormalized for fast filtering (Stage 1.6)
   publishedAt  DateTime
   fetchedAt    DateTime @default(now())
   dedupeHash   String   @unique // content/URL hash — dedupe across sources
@@ -51,6 +52,7 @@ model Item {
   @@index([sourceId])
   @@index([publishedAt])
   @@index([platform])
+  @@index([category])
 }
 
 model Feedback {

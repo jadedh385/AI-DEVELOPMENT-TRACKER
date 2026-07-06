@@ -15,6 +15,7 @@ export interface FeedItem {
   summary: string | null
   author: string | null
   platform: string
+  category: string
   publishedAt: Date
   sourceName: string
 }
@@ -34,6 +35,7 @@ export async function getFeedItems(): Promise<FeedItem[]> {
     summary: row.summary,
     author: row.author,
     platform: row.platform,
+    category: row.category,
     publishedAt: row.publishedAt,
     sourceName: row.source.name,
   }))

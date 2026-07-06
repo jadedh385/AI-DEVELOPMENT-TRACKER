@@ -12,6 +12,7 @@ const source: SourceInput = {
   type: 'rss',
   url: 'https://www.reddit.com/r/MachineLearning+artificial/hot.rss',
   platform: 'reddit',
+  category: 'community',
   keywordFilters: ['AI', 'LLM'],
 }
 

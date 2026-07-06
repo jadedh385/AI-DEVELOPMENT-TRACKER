@@ -13,6 +13,7 @@ const source: SourceInput = {
   type: 'hn',
   url: 'https://hn.algolia.com/api/v1/search_by_date',
   platform: 'hackernews',
+  category: 'community',
   keywordFilters: ['AI'],
 }
 
@@ -63,6 +64,7 @@ describe('ingestSource', () => {
       sourceId: 'src_hn',
       canonicalUrl: 'https://example.com/a',
       platform: 'hackernews',
+      category: 'community',
     })
     expect(inserted[0].dedupeHash).toMatch(/^[0-9a-f]{64}$/)
   })

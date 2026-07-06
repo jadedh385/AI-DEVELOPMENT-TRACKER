@@ -11,6 +11,7 @@ const source: SourceInput = {
   type: 'hn',
   url: 'https://hn.algolia.com/api/v1/search_by_date',
   platform: 'hackernews',
+  category: 'community',
   keywordFilters: ['AI', 'LLM'],
 }
 

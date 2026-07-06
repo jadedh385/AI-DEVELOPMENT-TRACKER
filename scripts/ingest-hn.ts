@@ -39,6 +39,7 @@ async function ensureHackerNewsSource(): Promise<SourceInput> {
     type: 'hn',
     url: source.url,
     platform: 'hackernews',
+    category: 'community',
     keywordFilters: parsedKeywords,
   }
 }

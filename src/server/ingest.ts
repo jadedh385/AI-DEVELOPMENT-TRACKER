@@ -18,6 +18,7 @@ export interface NewItemRecord {
   summary?: string
   author?: string
   platform: string
+  category: string
   publishedAt: Date
   dedupeHash: string
 }
@@ -85,6 +86,7 @@ export async function ingestSource(
       summary: entry.item.summary,
       author: entry.item.author,
       platform: entry.item.platform,
+      category: source.category,
       publishedAt: entry.item.publishedAt,
       dedupeHash: entry.dedupeHash,
     }))
