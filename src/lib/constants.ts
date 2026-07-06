@@ -60,6 +60,29 @@ function makeGuard<T extends readonly string[]>(values: T) {
     typeof value === 'string' && set.has(value)
 }
 
+/**
+ * Curated AI terms used to filter a keyword-search source (e.g. the Algolia HN
+ * API) down to AI-relevant stories. Stored as a source's `keywordFilters` so it
+ * is tunable per-source at runtime; this is only the seed default.
+ */
+export const DEFAULT_AI_KEYWORDS = [
+  'AI',
+  'artificial intelligence',
+  'LLM',
+  'GPT',
+  'Claude',
+  'Anthropic',
+  'OpenAI',
+  'Gemini',
+  'machine learning',
+  'neural network',
+  'transformer',
+  'diffusion',
+  'agent',
+  'fine-tuning',
+  'inference',
+] as const
+
 export const isSourceType = makeGuard(SOURCE_TYPES)
 export const isSourcePlatform = makeGuard(SOURCE_PLATFORMS)
 export const isSourceCategory = makeGuard(SOURCE_CATEGORIES)
