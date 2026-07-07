@@ -27,6 +27,7 @@ function makeRow(overrides: object = {}) {
     fetchedAt: new Date('2026-01-01'),
     dedupeHash: 'abc123',
     source: { name: 'Hacker News' },
+    feedback: [] as { reaction: string }[],
     ...overrides,
   }
 }

@@ -1,6 +1,8 @@
 import type { FeedItem } from '@/lib/items'
 import { formatRelativeTime } from '@/lib/format'
 import { BookmarkButton } from '@/components/BookmarkButton'
+import { ReactionButtons } from '@/components/ReactionButtons'
+import { TrackableLink } from '@/components/TrackableLink'
 
 interface ItemCardProps {
   item: FeedItem
@@ -25,10 +27,9 @@ export function ItemCard({ item }: ItemCardProps) {
     <article className="border-b border-zinc-200 py-4 dark:border-zinc-800">
       <div className="flex items-start gap-3">
         <div className="min-w-0 flex-1">
-          <a
+          <TrackableLink
+            itemId={item.id}
             href={item.canonicalUrl}
-            target="_blank"
-            rel="noopener noreferrer"
             className="group block min-h-[44px]"
           >
             <h2 className="text-base font-semibold leading-snug text-zinc-900 group-hover:underline dark:text-zinc-50">
@@ -39,7 +40,7 @@ export function ItemCard({ item }: ItemCardProps) {
                 {item.summary}
               </p>
             ) : null}
-          </a>
+          </TrackableLink>
           <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-zinc-500 dark:text-zinc-500">
             <span className="font-medium text-zinc-700 dark:text-zinc-300">
               {item.sourceName}
@@ -61,7 +62,12 @@ export function ItemCard({ item }: ItemCardProps) {
           </div>
         </div>
 
-        <div className="flex-shrink-0 pt-0.5">
+        <div className="flex flex-shrink-0 items-center gap-0.5 pt-0.5">
+          <ReactionButtons
+            itemId={item.id}
+            initialIsHelpful={item.isHelpful}
+            initialIsNotRelevant={item.isNotRelevant}
+          />
           <BookmarkButton itemId={item.id} initialIsSaved={item.isSaved} />
         </div>
       </div>

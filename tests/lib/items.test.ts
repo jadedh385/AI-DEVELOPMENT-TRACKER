@@ -27,7 +27,7 @@ function makeRow(overrides: object = {}) {
     fetchedAt: new Date('2026-01-01'),
     dedupeHash: 'abc123',
     source: { name: 'Hacker News' },
-    feedback: [],
+    feedback: [] as { reaction: string }[],
     ...overrides,
   }
 }
@@ -52,11 +52,39 @@ describe('getFeedItems', () => {
   })
 
   it('marks isSaved true when saved feedback exists', async () => {
-    mockFindMany.mockResolvedValue([makeRow({ feedback: [{ id: 'fb-1' }] })])
+    mockFindMany.mockResolvedValue([makeRow({ feedback: [{ reaction: 'saved' }] })])
 
     const result = await getFeedItems()
 
     expect(result[0].isSaved).toBe(true)
+  })
+
+  it('marks isHelpful true when helpful feedback exists', async () => {
+    mockFindMany.mockResolvedValue([makeRow({ feedback: [{ reaction: 'helpful' }] })])
+
+    const result = await getFeedItems()
+
+    expect(result[0].isHelpful).toBe(true)
+    expect(result[0].isNotRelevant).toBe(false)
+  })
+
+  it('marks isNotRelevant true when not_relevant feedback exists', async () => {
+    mockFindMany.mockResolvedValue([makeRow({ feedback: [{ reaction: 'not_relevant' }] })])
+
+    const result = await getFeedItems()
+
+    expect(result[0].isNotRelevant).toBe(true)
+    expect(result[0].isHelpful).toBe(false)
+  })
+
+  it('returns false for all reactions when no feedback exists', async () => {
+    mockFindMany.mockResolvedValue([makeRow()])
+
+    const result = await getFeedItems()
+
+    expect(result[0].isSaved).toBe(false)
+    expect(result[0].isHelpful).toBe(false)
+    expect(result[0].isNotRelevant).toBe(false)
   })
 
   it('fetches without where clause when no filters provided', async () => {
