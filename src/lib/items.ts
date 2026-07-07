@@ -18,14 +18,21 @@ export interface FeedItem {
   category: string
   publishedAt: Date
   sourceName: string
+  isSaved: boolean
 }
 
-/** Most-recent-first, capped. */
+/** Most-recent-first, capped. Includes saved status for the local user. */
 export async function getFeedItems(): Promise<FeedItem[]> {
   const rows = await prisma.item.findMany({
     orderBy: { publishedAt: 'desc' },
     take: FEED_LIMIT,
-    include: { source: { select: { name: true } } },
+    include: {
+      source: { select: { name: true } },
+      feedback: {
+        where: { reaction: 'saved', userId: 'local' },
+        select: { id: true },
+      },
+    },
   })
 
   return rows.map((row) => ({
@@ -38,5 +45,6 @@ export async function getFeedItems(): Promise<FeedItem[]> {
     category: row.category,
     publishedAt: row.publishedAt,
     sourceName: row.source.name,
+    isSaved: row.feedback.length > 0,
   }))
 }
