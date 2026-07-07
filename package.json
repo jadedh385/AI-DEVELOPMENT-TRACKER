@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest",
     "test:run": "vitest run",
+    "test:e2e": "playwright test",
     "ingest:hn": "tsx scripts/ingest-hn.ts",
     "ingest:reddit": "tsx scripts/ingest-reddit.ts",
     "ingest:all": "tsx scripts/ingest-all.ts",
@@ -27,6 +28,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
