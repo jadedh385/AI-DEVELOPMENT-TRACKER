@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { getFeedItems } from '@/lib/items'
 import { ItemCard } from '@/components/ItemCard'
 import { FilterBar } from '@/components/FilterBar'
+import { RefreshButton } from '@/components/RefreshButton'
 import { SOURCE_PLATFORMS, SOURCE_CATEGORIES } from '@/lib/constants'
 
 // Always reflect the latest ingested items rather than a build-time snapshot.
@@ -38,12 +39,15 @@ export default async function Home({ searchParams }: HomeProps) {
               What happened in AI, and where to read more.
             </p>
           </div>
-          <Link
-            href="/saved"
-            className="flex-shrink-0 rounded-md px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
-          >
-            Saved
-          </Link>
+          <div className="flex flex-shrink-0 items-start gap-2">
+            <RefreshButton />
+            <Link
+              href="/saved"
+              className="rounded-md px-3 py-1.5 text-sm font-medium text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
+            >
+              Saved
+            </Link>
+          </div>
         </header>
 
         <FilterBar
@@ -84,8 +88,7 @@ function EmptyState({ hasFilters }: { hasFilters: boolean }) {
       </p>
       {!hasFilters && (
         <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-500">
-          Run <code className="font-mono">npm run ingest:hn</code> to pull the
-          latest Hacker News AI stories.
+          Hit <strong>Refresh</strong> to pull the latest stories.
         </p>
       )}
     </div>
