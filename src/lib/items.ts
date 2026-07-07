@@ -21,9 +21,31 @@ export interface FeedItem {
   isSaved: boolean
 }
 
+/** Active filter dimensions. Empty arrays mean "no filter on that dimension". */
+export interface FeedFilters {
+  platforms?: string[]
+  categories?: string[]
+}
+
+function buildWhere(filters: FeedFilters) {
+  const platformClause =
+    filters.platforms && filters.platforms.length > 0
+      ? { platform: { in: filters.platforms } }
+      : {}
+
+  const categoryClause =
+    filters.categories && filters.categories.length > 0
+      ? { category: { in: filters.categories } }
+      : {}
+
+  const where = { ...platformClause, ...categoryClause }
+  return Object.keys(where).length > 0 ? where : undefined
+}
+
 /** Most-recent-first, capped. Includes saved status for the local user. */
-export async function getFeedItems(): Promise<FeedItem[]> {
+export async function getFeedItems(filters: FeedFilters = {}): Promise<FeedItem[]> {
   const rows = await prisma.item.findMany({
+    where: buildWhere(filters),
     orderBy: { publishedAt: 'desc' },
     take: FEED_LIMIT,
     include: {
