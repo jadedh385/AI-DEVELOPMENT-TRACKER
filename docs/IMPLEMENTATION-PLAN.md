@@ -103,10 +103,11 @@
 - **Skills:** `refresh-scheduler`, `caching-ratelimit`.
 - **Gate:** GATE 1 on scheduling approach (local cron vs. in-app job).
 
-### Stage 1.9 — Phase 1 Hardening & Local Ship
+### Stage 1.9 — Phase 1 Hardening & Local Ship ✅ COMPLETE (2026-07-08)
 - **Tasks:** E2E flows (read feed, filter, feedback, add/remove source); error states; empty/loading states; run `production-audit` (local scope); README/run instructions.
 - **Deliverable:** stable personal build you run daily.
 - **Skills:** `e2e-journey`, `e2e-runner`, `code-review-gate`, `production-audit`, `deploy` (local).
+- **Done:** 21 Playwright E2E tests (feed, filtering, feedback, save-for-later) — all passing. Error boundaries + loading skeletons for feed and /saved. README with setup/ingest/test docs. Typecheck, lint, 133 unit tests all green. Key fix: migration runs inside the webServer command so Playwright's health-check can pass before globalSetup seeds fixtures.
 
 **→ PHASE 1 REVIEW GATE:** use it for a real period; judge feed quality & source mix; log findings to `docs/decisions/`; then scope Phase 2.
 
